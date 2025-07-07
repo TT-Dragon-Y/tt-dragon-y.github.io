@@ -52,9 +52,9 @@
             background: #f8f9fa;
             border-radius: 10px;
             margin-bottom: 30px;
-            padding: 25px;
             border-left: 5px solid #ff6b6b;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
+            overflow: hidden;
         }
         
         .day-card:hover {
@@ -62,12 +62,48 @@
             box-shadow: 0 15px 30px rgba(0,0,0,0.1);
         }
         
+        .day-header {
+            padding: 25px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #f8f9fa;
+            transition: background-color 0.3s ease;
+        }
+        
+        .day-header:hover {
+            background: #e9ecef;
+        }
+        
         .day-title {
             font-size: 1.5em;
             color: #2c3e50;
-            margin-bottom: 15px;
             display: flex;
             align-items: center;
+            margin: 0;
+        }
+        
+        .toggle-icon {
+            font-size: 1.2em;
+            color: #ff6b6b;
+            transition: transform 0.3s ease;
+        }
+        
+        .day-content {
+            padding: 0 25px 25px 25px;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease, padding 0.3s ease;
+        }
+        
+        .day-content.expanded {
+            max-height: 2000px;
+            padding: 0 25px 25px 25px;
+        }
+        
+        .day-card.collapsed .toggle-icon {
+            transform: rotate(-90deg);
         }
         
         .day-number {
@@ -214,10 +250,14 @@
         
         <div class="timeline">
             <div class="day-card">
-                <div class="day-title">
-                    <div class="day-number">1</div>
-                    第一天 - 抵达梧州
+                <div class="day-header" onclick="toggleDay(this)">
+                    <div class="day-title">
+                        <div class="day-number">1</div>
+                        第一天 - 抵达梧州
+                    </div>
+                    <div class="toggle-icon">▼</div>
                 </div>
+                <div class="day-content expanded">
                 
                 <div class="activity transport">
                     <div class="activity-time">08:00</div>
@@ -260,13 +300,18 @@
                     <div class="activity-description">在夜市品尝各种小吃，体验当地夜生活</div>
                     <div class="activity-location">梧州夜市</div>
                 </div>
+                </div>
             </div>
             
             <div class="day-card">
-                <div class="day-title">
-                    <div class="day-number">2</div>
-                    第二天 - 文化探索
+                <div class="day-header" onclick="toggleDay(this)">
+                    <div class="day-title">
+                        <div class="day-number">2</div>
+                        第二天 - 文化探索
+                    </div>
+                    <div class="toggle-icon">▼</div>
                 </div>
+                <div class="day-content expanded">
                 
                 <div class="activity">
                     <div class="activity-time">08:00</div>
@@ -316,13 +361,18 @@
                     <div class="activity-description">享用梧州特色菜肴，如白切鸡、蒸排骨等</div>
                     <div class="activity-location">推荐餐厅</div>
                 </div>
+                </div>
             </div>
             
             <div class="day-card">
-                <div class="day-title">
-                    <div class="day-number">3</div>
-                    第三天 - 自然风光
+                <div class="day-header" onclick="toggleDay(this)">
+                    <div class="day-title">
+                        <div class="day-number">3</div>
+                        第三天 - 自然风光
+                    </div>
+                    <div class="toggle-icon">▼</div>
                 </div>
+                <div class="day-content expanded">
                 
                 <div class="activity">
                     <div class="activity-time">08:00</div>
@@ -372,8 +422,35 @@
                     <div class="activity-description">根据返程时间安排，前往车站或机场</div>
                     <div class="activity-location">梧州 → 目的地</div>
                 </div>
+                </div>
             </div>
         </div>
     </div>
+
+    <script>
+        function toggleDay(header) {
+            const dayCard = header.parentElement;
+            const dayContent = header.nextElementSibling;
+            const toggleIcon = header.querySelector('.toggle-icon');
+            
+            if (dayContent.classList.contains('expanded')) {
+                dayContent.classList.remove('expanded');
+                dayCard.classList.add('collapsed');
+                toggleIcon.textContent = '▶';
+            } else {
+                dayContent.classList.add('expanded');
+                dayCard.classList.remove('collapsed');
+                toggleIcon.textContent = '▼';
+            }
+        }
+
+        // Initialize all days as expanded by default
+        document.addEventListener('DOMContentLoaded', function() {
+            const allDayContents = document.querySelectorAll('.day-content');
+            allDayContents.forEach(content => {
+                content.classList.add('expanded');
+            });
+        });
+    </script>
 </body>
 </html>
