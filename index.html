@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>梧州行程安排</title>
+    <title>我的旅行记录</title>
     <style>
         * {
             margin: 0;
@@ -31,149 +31,146 @@
             background: linear-gradient(45deg, #ff6b6b, #feca57);
             color: white;
             text-align: center;
-            padding: 30px;
-        }
-        
-        .header h1 {
-            font-size: 2.5em;
-            margin-bottom: 10px;
-        }
-        
-        .header p {
-            font-size: 1.2em;
-            opacity: 0.9;
-        }
-        
-        .timeline {
             padding: 40px;
         }
         
-        .day-card {
-            background: #f8f9fa;
-            border-radius: 10px;
-            margin-bottom: 30px;
+        .header h1 {
+            font-size: 3em;
+            margin-bottom: 15px;
+            font-weight: 300;
+        }
+        
+        .header p {
+            font-size: 1.3em;
+            opacity: 0.9;
+        }
+        
+        .trips-grid {
+            padding: 50px 40px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            justify-items: center;
+        }
+        
+        .trip-card {
+            background: white;
+            border-radius: 15px;
             overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
-            transition: transform 0.3s ease;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            text-decoration: none;
+            color: inherit;
+            width: 100%;
+            max-width: 400px;
         }
         
-        .day-card:hover {
-            transform: translateY(-5px);
+        .trip-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.15);
         }
         
-        .day-header {
-            background: linear-gradient(45deg, #4ecdc4, #44a08d);
-            color: white;
-            padding: 20px;
-            cursor: pointer;
+        .trip-image {
+            height: 200px;
+            background: linear-gradient(45deg, #ff9a9e 0%, #fecfef 50%, #fecfef 100%);
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4em;
+        }
+        
+        .trip-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.3), rgba(0,0,0,0.1));
+            display: flex;
+            align-items: flex-start;
+            justify-content: flex-end;
+            padding: 15px;
+        }
+        
+        .trip-date {
+            background: rgba(255,255,255,0.9);
+            color: #333;
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 0.9em;
+            font-weight: 500;
+        }
+        
+        .trip-content {
+            padding: 25px;
+        }
+        
+        .trip-title {
+            font-size: 1.5em;
+            color: #2c3e50;
+            margin-bottom: 12px;
+            font-weight: 600;
+        }
+        
+        .trip-description {
+            color: #7f8c8d;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+        
+        .trip-details {
             display: flex;
             justify-content: space-between;
-            align-items: center;
+            margin-bottom: 20px;
+            font-size: 0.9em;
         }
         
-        .day-title {
-            font-size: 1.5em;
-            font-weight: bold;
+        .trip-duration,
+        .trip-location {
+            background: #f8f9fa;
+            padding: 5px 12px;
+            border-radius: 15px;
+            color: #495057;
+            font-weight: 500;
         }
         
-        .toggle-icon {
-            font-size: 1.2em;
-            transition: transform 0.3s ease;
-        }
-        
-        .day-content {
-            padding: 0;
-            max-height: 0;
-            overflow: hidden;
+        .trip-button {
+            background: linear-gradient(45deg, #ff6b6b, #feca57);
+            color: white;
+            padding: 12px 25px;
+            border-radius: 25px;
+            text-align: center;
+            font-weight: 500;
             transition: all 0.3s ease;
         }
         
-        .day-content.active {
-            padding: 20px;
-            max-height: 1000px;
-        }
-        
-        .activity {
-            display: flex;
-            align-items: flex-start;
-            margin-bottom: 20px;
-            padding: 15px;
-            background: white;
-            border-radius: 8px;
-            border-left: 4px solid #4ecdc4;
-        }
-        
-        .time {
-            background: #4ecdc4;
-            color: white;
-            padding: 8px 12px;
-            border-radius: 20px;
-            font-weight: bold;
-            min-width: 80px;
-            text-align: center;
-            margin-right: 15px;
-        }
-        
-        .activity-details {
-            flex: 1;
-        }
-        
-        .activity-title {
-            font-size: 1.2em;
-            font-weight: bold;
-            color: #2c3e50;
-            margin-bottom: 5px;
-        }
-        
-        .activity-desc {
-            color: #7f8c8d;
-            line-height: 1.6;
-        }
-        
-        .location {
-            color: #e74c3c;
-            font-weight: bold;
-        }
-        
-        .weather {
-            background: #3498db;
-            color: white;
-            padding: 10px 20px;
-            border-radius: 20px;
-            display: inline-block;
-            margin: 10px 0;
-        }
-        
-        .notes {
-            background: #fff3cd;
-            border: 1px solid #ffeaa7;
-            border-radius: 8px;
-            padding: 15px;
-            margin-top: 20px;
-        }
-        
-        .notes h3 {
-            color: #856404;
-            margin-bottom: 10px;
-        }
-        
-        .notes ul {
-            color: #856404;
-            padding-left: 20px;
+        .trip-card:hover .trip-button {
+            background: linear-gradient(45deg, #ff5252, #ffc107);
+            transform: scale(1.05);
         }
         
         @media (max-width: 768px) {
-            .activity {
-                flex-direction: column;
+            .container {
+                margin: 10px;
+                border-radius: 10px;
             }
             
-            .time {
-                margin-bottom: 10px;
-                margin-right: 0;
+            .header {
+                padding: 30px 20px;
             }
             
             .header h1 {
-                font-size: 2em;
+                font-size: 2.2em;
+            }
+            
+            .trips-grid {
+                padding: 30px 20px;
+                grid-template-columns: 1fr;
+            }
+            
+            .trip-card {
+                max-width: none;
             }
         }
     </style>
@@ -181,382 +178,29 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1>🏮 梧州之行 🏮</h1>
-            <p>探索千年古城，品味岭南文化</p>
-            <div style="margin-top: 15px; font-size: 1.1em; background: rgba(255,255,255,0.2); padding: 10px 20px; border-radius: 20px; display: inline-block;">
-                📅 出行日期：2025年7月11日 - 7月13日
-            </div>
+            <h1>我的旅行记录</h1>
+            <p>记录每一次美好的旅程</p>
         </div>
         
-        <div class="timeline">
-            <!-- 第一天 -->
-            <div class="day-card">
-                <div class="day-header" onclick="toggleDay(this)">
-                    <div class="day-title">第一天 - 抵达梧州 (7月11日 周五)</div>
-                    <div class="toggle-icon">▼</div>
-                </div>
-                <div class="day-content">
-                    <div class="weather">🌤️ 天气：多云转晴 28°C (7月梧州天气炎热，注意防暑)</div>
-                    
-                    <div class="activity">
-                        <div class="time">15:00-15:30</div>
-                        <div class="activity-details">
-                            <div class="activity-title">家-深圳北</div>
-                            <div class="activity-desc">
-                                <span class="location">📍 出发地到深圳北站</span><br>
-                                从家出发前往深圳北站，准备乘坐高铁
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="activity">
-                        <div class="time">15:56-18:01</div>
-                        <div class="activity-details">
-                            <div class="activity-title">深圳北-梧州南</div>
-                            <div class="activity-desc">
-                                <span class="location">🚄 高铁G2903</span><br>
-                                乘坐高铁前往梧州南站，车程约2小时
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="activity">
-                        <div class="time">19:00-19:30</div>
-                        <div class="activity-details">
-                            <div class="activity-title">维纳斯国际酒店</div>
-                            <div class="activity-desc">
-                                <span class="location">🏨 维纳斯国际酒店</span><br>
-                                抵达酒店，办理入住手续，稍作休息
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="activity">
-                        <div class="time">20:00-21:30</div>
-                        <div class="activity-details">
-                            <div class="activity-title">游中国骑楼城</div>
-                            <div class="activity-desc">
-                                <span class="location">📍 中国骑楼城</span><br>
-                                夜游骑楼城，感受千年古城的夜晚魅力，品尝当地小吃
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="notes">
-                        <h3>💡 今日小贴士</h3>
-                        <ul>
-                            <li>7月天气炎热，建议穿透气的运动鞋和轻薄衣物</li>
-                            <li>必备防晒霜SPF50+、遮阳帽、太阳镜和充足的水</li>
-                            <li>骑楼城有很多特色小店，可以购买纪念品</li>
-                            <li>中午时段较热，可在室内景点或有空调的地方休息</li>
-                        </ul>
+        <div class="trips-grid">
+            <a href="wuzhou-trip.html" class="trip-card">
+                <div class="trip-image">
+                    🏮
+                    <div class="trip-overlay">
+                        <div class="trip-date">2024年3月</div>
                     </div>
                 </div>
-            </div>
-            
-            <!-- 第二天 -->
-            <div class="day-card">
-                <div class="day-header" onclick="toggleDay(this)">
-                    <div class="day-title">第二天 - 文化探索 (7月12日 周六)</div>
-                    <div class="toggle-icon">▼</div>
+                <div class="trip-content">
+                    <h3 class="trip-title">梧州之行</h3>
+                    <p class="trip-description">探索岭南文化古城，品味千年历史韵味。游览骑楼城、白云山、石表山等著名景点。</p>
+                    <div class="trip-details">
+                        <span class="trip-duration">3天2夜</span>
+                        <span class="trip-location">广西梧州</span>
+                    </div>
+                    <div class="trip-button">查看详情</div>
                 </div>
-                <div class="day-content">
-                    <div class="weather">☀️ 天气：晴热 30°C (建议早出晚归避开正午高温)</div>
-                    
-                    <div class="activity">
-                        <div class="time">8:00-9:30</div>
-                        <div class="activity-details">
-                            <div class="activity-title">早餐</div>
-                            <div class="activity-desc">
-                                <span class="location">🍜 酒店或附近餐厅</span><br>
-                                享用丰盛早餐，为一天的行程做好准备
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="activity">
-                        <div class="time">9:30-11:00</div>
-                        <div class="activity-details">
-                            <div class="activity-title">白云山、龙母庙</div>
-                            <div class="activity-desc">
-                                <span class="location">📍 白云山风景区、龙母庙</span><br>
-                                登白云山俯瞰梧州全景，参观千年龙母庙祈福
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="activity">
-                        <div class="time">12:00-13:00</div>
-                        <div class="activity-details">
-                            <div class="activity-title">粤北餐厅午餐</div>
-                            <div class="activity-desc">
-                                <span class="location">🍽️ 粤北餐厅</span><br>
-                                品尝正宗粤菜，体验当地饮食文化
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="activity">
-                        <div class="time">14:00-16:00</div>
-                        <div class="activity-details">
-                            <div class="activity-title">岭南文化园</div>
-                            <div class="activity-desc">
-                                <span class="location">🏛️ 岭南文化园</span><br>
-                                深入了解岭南文化，欣赏传统建筑和艺术
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="activity">
-                        <div class="time">17:00-18:00</div>
-                        <div class="activity-details">
-                            <div class="activity-title">河滨公园、领事馆</div>
-                            <div class="activity-desc">
-                                <span class="location">🌳 河滨公园、历史领事馆</span><br>
-                                漫步河滨，参观历史领事馆，了解梧州开埠历史
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="activity">
-                        <div class="time">18:00-19:00</div>
-                        <div class="activity-details">
-                            <div class="activity-title">东正路</div>
-                            <div class="activity-desc">
-                                <span class="location">🛍️ 东正路商业街</span><br>
-                                逛街购物，感受梧州现代商业氛围
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="notes">
-                        <h3>💡 今日小贴士</h3>
-                        <ul>
-                            <li>龙母庙香火旺盛，7月天热注意通风和安全</li>
-                            <li>博物馆周一闭馆，有空调是避暑好去处</li>
-                            <li>六堡茶是梧州特产，夏天喝茶解暑，可以购买一些带回家</li>
-                            <li>建议上午早点出发，避开中午12-15点的高温时段</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- 第三天 -->
-            <div class="day-card">
-                <div class="day-header" onclick="toggleDay(this)">
-                    <div class="day-title">第三天 - 自然风光 (7月13日 周日)</div>
-                    <div class="toggle-icon">▼</div>
-                </div>
-                <div class="day-content">
-                    <div class="weather">⛈️ 天气：雷阵雨 27°C (7月是雨季，请备好雨具)</div>
-                    
-                    <div class="activity">
-                        <div class="time">8:00-8:30</div>
-                        <div class="activity-details">
-                            <div class="activity-title">早餐</div>
-                            <div class="activity-desc">
-                                <span class="location">🍜 酒店餐厅</span><br>
-                                享用酒店早餐，为返程做准备
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="activity">
-                        <div class="time">9:00-11:00</div>
-                        <div class="activity-details">
-                            <div class="activity-title">博物馆</div>
-                            <div class="activity-desc">
-                                <span class="location">🏛️ 梧州博物馆</span><br>
-                                深入了解梧州历史文化，观赏珍贵文物
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="activity">
-                        <div class="time">11:00-12:00</div>
-                        <div class="activity-details">
-                            <div class="activity-title">梧州南</div>
-                            <div class="activity-desc">
-                                <span class="location">🚄 前往梧州南站</span><br>
-                                前往高铁站，办理退房和行李寄存
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="activity">
-                        <div class="time">12:00-14:00</div>
-                        <div class="activity-details">
-                            <div class="activity-title">梧州南-深圳</div>
-                            <div class="activity-desc">
-                                <span class="location">🚄 返程高铁</span><br>
-                                乘坐高铁返回深圳，结束愉快的梧州之旅
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="notes">
-                        <h3>💡 今日小贴士</h3>
-                        <ul>
-                            <li>石表山虽海拔较高但7月仍然炎热，带好防晒用品</li>
-                            <li>雷雨天气玻璃栈道可能关闭，请提前咨询并备好雨具</li>
-                            <li>梧州特产：六堡茶、龟苓膏（夏天清热）、纸包鸡等</li>
-                            <li>山区午后易有雷阵雨，建议上午游览，下午早点下山</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- 美食推荐 -->
-            <div class="day-card">
-                <div class="day-header" onclick="toggleDay(this)">
-                    <div class="day-title">🍜 梧州美食推荐</div>
-                    <div class="toggle-icon">▼</div>
-                </div>
-                <div class="day-content">
-                    <div class="activity">
-                        <div class="time">🥘</div>
-                        <div class="activity-details">
-                            <div class="activity-title">肥仔周强粉店</div>
-                            <div class="activity-desc">
-                                本地可乐：沙示<br>
-                                冠记豆腐花：冰、桂花糖水<br>
-                                好味牛肠酸：肠脆骨
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="activity">
-                        <div class="time">🍵</div>
-                        <div class="activity-details">
-                            <div class="activity-title">永昌堂凉茶</div>
-                            <div class="activity-desc">
-                                传统凉茶铺，清热解毒<br>
-                                夏日必备的消暑良品
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="activity">
-                        <div class="time">🥢</div>
-                        <div class="activity-details">
-                            <div class="activity-title">倒水佬饭店</div>
-                            <div class="activity-desc">
-                                粉、猪尾煲<br>
-                                芳记粉店特色美食
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="activity">
-                        <div class="time">🥛</div>
-                        <div class="activity-details">
-                            <div class="activity-title">六堡奶茶</div>
-                            <div class="activity-desc">
-                                冰泉豆浆：糯米糍<br>
-                                粤北餐厅：葱油鱼、纸包鸡
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- 实用信息 -->
-            <div class="day-card">
-                <div class="day-header" onclick="toggleDay(this)">
-                    <div class="day-title">📋 实用信息</div>
-                    <div class="toggle-icon">▼</div>
-                </div>
-                <div class="day-content">
-                    <div class="activity">
-                        <div class="time">🏨</div>
-                        <div class="activity-details">
-                            <div class="activity-title">推荐住宿</div>
-                            <div class="activity-desc">
-                                • 梧州国际大酒店<br>
-                                • 维也纳酒店梧州店<br>
-                                • 如家酒店梧州骑楼城店
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="activity">
-                        <div class="time">🚗</div>
-                        <div class="activity-details">
-                            <div class="activity-title">交通信息</div>
-                            <div class="activity-desc">
-                                • 梧州南站：高铁站，连接广州、南宁等城市<br>
-                                • 梧州西江机场：有航班往返北京、上海等地<br>
-                                • 市内交通：公交、出租车、网约车
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="activity">
-                        <div class="time">🍜</div>
-                        <div class="activity-details">
-                            <div class="activity-title">特色美食</div>
-                            <div class="activity-desc">
-                                • 纸包鸡：梧州名菜<br>
-                                • 龟苓膏：清热解毒<br>
-                                • 艇仔粥：传统小吃<br>
-                                • 六堡茶：著名茶叶
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="activity">
-                        <div class="time">📞</div>
-                        <div class="activity-details">
-                            <div class="activity-title">紧急联系</div>
-                            <div class="activity-desc">
-                                • 报警电话：110<br>
-                                • 急救电话：120<br>
-                                • 旅游投诉：12301<br>
-                                • 梧州旅游咨询：0774-3844999
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            </a>
         </div>
     </div>
-    
-    <script>
-        function toggleDay(element) {
-            const content = element.nextElementSibling;
-            const icon = element.querySelector('.toggle-icon');
-            
-            if (content.classList.contains('active')) {
-                content.classList.remove('active');
-                icon.textContent = '▼';
-                icon.style.transform = 'rotate(0deg)';
-            } else {
-                content.classList.add('active');
-                icon.textContent = '▲';
-                icon.style.transform = 'rotate(180deg)';
-            }
-        }
-        
-        // 页面加载时展开第一天的行程
-        document.addEventListener('DOMContentLoaded', function() {
-            const firstDay = document.querySelector('.day-card .day-header');
-            if (firstDay) {
-                toggleDay(firstDay);
-            }
-        });
-        
-        // 添加一些交互效果
-        document.querySelectorAll('.activity').forEach(activity => {
-            activity.addEventListener('mouseenter', function() {
-                this.style.transform = 'translateX(10px)';
-                this.style.boxShadow = '0 5px 15px rgba(0,0,0,0.1)';
-            });
-            
-            activity.addEventListener('mouseleave', function() {
-                this.style.transform = 'translateX(0)';
-                this.style.boxShadow = 'none';
-            });
-        });
-    </script>
 </body>
 </html>

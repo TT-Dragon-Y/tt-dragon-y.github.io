@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>梧州行程安排</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Microsoft YaHei', Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(45deg, #ff6b6b, #feca57);
+            color: white;
+            text-align: center;
+            padding: 30px;
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+        
+        .timeline {
+            padding: 40px;
+        }
+        
+        .day-card {
+            background: #f8f9fa;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            padding: 25px;
+            border-left: 5px solid #ff6b6b;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .day-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+        }
+        
+        .day-title {
+            font-size: 1.5em;
+            color: #2c3e50;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .day-number {
+            background: #ff6b6b;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            font-weight: bold;
+        }
+        
+        .activity {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 15px;
+            border-left: 3px solid #3498db;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        
+        .activity:last-child {
+            margin-bottom: 0;
+        }
+        
+        .activity-time {
+            color: #e74c3c;
+            font-weight: bold;
+            font-size: 1.1em;
+            margin-bottom: 8px;
+        }
+        
+        .activity-title {
+            font-size: 1.2em;
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+        
+        .activity-description {
+            color: #7f8c8d;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+        
+        .activity-location {
+            color: #27ae60;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+        }
+        
+        .activity-location::before {
+            content: "📍";
+            margin-right: 5px;
+        }
+        
+        .highlight {
+            background: linear-gradient(120deg, #a8edea 0%, #fed6e3 100%);
+            border-left-color: #ff6b6b;
+        }
+        
+        .food {
+            background: linear-gradient(120deg, #ffecd2 0%, #fcb69f 100%);
+            border-left-color: #f39c12;
+        }
+        
+        .transport {
+            background: linear-gradient(120deg, #d299c2 0%, #fef9d7 100%);
+            border-left-color: #9b59b6;
+        }
+        
+        .back-link {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: rgba(255, 255, 255, 0.9);
+            color: #333;
+            padding: 10px 20px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 500;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+        
+        .back-link:hover {
+            background: white;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                margin: 10px;
+                border-radius: 10px;
+            }
+            
+            .header {
+                padding: 20px;
+            }
+            
+            .header h1 {
+                font-size: 2em;
+            }
+            
+            .timeline {
+                padding: 20px;
+            }
+            
+            .day-card {
+                padding: 20px;
+            }
+            
+            .day-title {
+                font-size: 1.3em;
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .day-number {
+                margin-bottom: 10px;
+                margin-right: 0;
+            }
+            
+            .activity {
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <a href="index.html" class="back-link">← 返回行程列表</a>
+    
+    <div class="container">
+        <div class="header">
+            <h1>梧州行程安排</h1>
+            <p>探索岭南文化古城，品味千年历史韵味</p>
+        </div>
+        
+        <div class="timeline">
+            <div class="day-card">
+                <div class="day-title">
+                    <div class="day-number">1</div>
+                    第一天 - 抵达梧州
+                </div>
+                
+                <div class="activity transport">
+                    <div class="activity-time">08:00</div>
+                    <div class="activity-title">出发前往梧州</div>
+                    <div class="activity-description">从出发地乘坐交通工具前往梧州，建议提前预订车票或机票</div>
+                    <div class="activity-location">出发地 → 梧州</div>
+                </div>
+                
+                <div class="activity">
+                    <div class="activity-time">12:00</div>
+                    <div class="activity-title">抵达梧州并入住酒店</div>
+                    <div class="activity-description">办理酒店入住手续，稍作休息调整状态</div>
+                    <div class="activity-location">梧州市区酒店</div>
+                </div>
+                
+                <div class="activity food">
+                    <div class="activity-time">13:30</div>
+                    <div class="activity-title">品尝梧州特色午餐</div>
+                    <div class="activity-description">尝试梧州纸包鸡、龟苓膏等当地特色美食</div>
+                    <div class="activity-location">梧州老字号餐厅</div>
+                </div>
+                
+                <div class="activity highlight">
+                    <div class="activity-time">15:00</div>
+                    <div class="activity-title">游览骑楼城</div>
+                    <div class="activity-description">漫步在具有南洋风情的骑楼建筑群中，感受梧州独特的建筑文化</div>
+                    <div class="activity-location">梧州骑楼城</div>
+                </div>
+                
+                <div class="activity">
+                    <div class="activity-time">17:30</div>
+                    <div class="activity-title">西江夜景观赏</div>
+                    <div class="activity-description">在西江边欣赏美丽的江景和夕阳西下</div>
+                    <div class="activity-location">西江滨江公园</div>
+                </div>
+                
+                <div class="activity food">
+                    <div class="activity-time">19:00</div>
+                    <div class="activity-title">晚餐及夜市体验</div>
+                    <div class="activity-description">在夜市品尝各种小吃，体验当地夜生活</div>
+                    <div class="activity-location">梧州夜市</div>
+                </div>
+            </div>
+            
+            <div class="day-card">
+                <div class="day-title">
+                    <div class="day-number">2</div>
+                    第二天 - 文化探索
+                </div>
+                
+                <div class="activity">
+                    <div class="activity-time">08:00</div>
+                    <div class="activity-title">酒店早餐</div>
+                    <div class="activity-description">在酒店享用丰盛的早餐，为一天的行程做好准备</div>
+                    <div class="activity-location">酒店餐厅</div>
+                </div>
+                
+                <div class="activity highlight">
+                    <div class="activity-time">09:30</div>
+                    <div class="activity-title">参观梧州博物馆</div>
+                    <div class="activity-description">了解梧州的历史文化，欣赏珍贵的文物展品</div>
+                    <div class="activity-location">梧州市博物馆</div>
+                </div>
+                
+                <div class="activity">
+                    <div class="activity-time">11:30</div>
+                    <div class="activity-title">游览中山纪念堂</div>
+                    <div class="activity-description">参观这座具有重要历史意义的建筑，缅怀伟人</div>
+                    <div class="activity-location">梧州中山纪念堂</div>
+                </div>
+                
+                <div class="activity food">
+                    <div class="activity-time">12:30</div>
+                    <div class="activity-title">午餐时光</div>
+                    <div class="activity-description">品尝梧州河粉、艇仔粥等地道美食</div>
+                    <div class="activity-location">当地特色餐厅</div>
+                </div>
+                
+                <div class="activity highlight">
+                    <div class="activity-time">14:00</div>
+                    <div class="activity-title">白云山风景区</div>
+                    <div class="activity-description">登山观景，俯瞰梧州全貌，呼吸新鲜空气</div>
+                    <div class="activity-location">白云山风景区</div>
+                </div>
+                
+                <div class="activity">
+                    <div class="activity-time">17:00</div>
+                    <div class="activity-title">龙母庙参拜</div>
+                    <div class="activity-description">参观这座历史悠久的庙宇，了解当地的宗教文化</div>
+                    <div class="activity-location">龙母庙</div>
+                </div>
+                
+                <div class="activity food">
+                    <div class="activity-time">18:30</div>
+                    <div class="activity-title">特色晚餐</div>
+                    <div class="activity-description">享用梧州特色菜肴，如白切鸡、蒸排骨等</div>
+                    <div class="activity-location">推荐餐厅</div>
+                </div>
+            </div>
+            
+            <div class="day-card">
+                <div class="day-title">
+                    <div class="day-number">3</div>
+                    第三天 - 自然风光
+                </div>
+                
+                <div class="activity">
+                    <div class="activity-time">08:00</div>
+                    <div class="activity-title">早餐及退房</div>
+                    <div class="activity-description">享用早餐后办理退房手续，准备前往景区</div>
+                    <div class="activity-location">酒店</div>
+                </div>
+                
+                <div class="activity highlight">
+                    <div class="activity-time">09:30</div>
+                    <div class="activity-title">石表山风景区</div>
+                    <div class="activity-description">游览奇特的丹霞地貌，欣赏壮观的自然风光</div>
+                    <div class="activity-location">石表山风景区</div>
+                </div>
+                
+                <div class="activity food">
+                    <div class="activity-time">12:00</div>
+                    <div class="activity-title">景区内午餐</div>
+                    <div class="activity-description">在景区内的餐厅用餐，品尝农家菜</div>
+                    <div class="activity-location">石表山景区餐厅</div>
+                </div>
+                
+                <div class="activity">
+                    <div class="activity-time">13:30</div>
+                    <div class="activity-title">继续游览石表山</div>
+                    <div class="activity-description">探索更多景点，拍摄美丽的风景照片</div>
+                    <div class="activity-location">石表山各景点</div>
+                </div>
+                
+                <div class="activity">
+                    <div class="activity-time">16:00</div>
+                    <div class="activity-title">返回市区</div>
+                    <div class="activity-description">结束石表山之旅，返回梧州市区</div>
+                    <div class="activity-location">石表山 → 梧州市区</div>
+                </div>
+                
+                <div class="activity food">
+                    <div class="activity-time">18:00</div>
+                    <div class="activity-title">告别晚餐</div>
+                    <div class="activity-description">最后一顿梧州美食，回味这次美好的旅程</div>
+                    <div class="activity-location">精选餐厅</div>
+                </div>
+                
+                <div class="activity transport">
+                    <div class="activity-time">20:00</div>
+                    <div class="activity-title">准备返程</div>
+                    <div class="activity-description">根据返程时间安排，前往车站或机场</div>
+                    <div class="activity-location">梧州 → 目的地</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
